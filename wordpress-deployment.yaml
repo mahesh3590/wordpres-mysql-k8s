@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
+  labels:
+    component: wp-frontend
 spec:
   replicas: 2
   selector:
