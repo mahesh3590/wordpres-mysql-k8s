@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: wp-frontend
+  template:
+    metadata:
+      labels:
+        component: wp-frontend
+    spec:
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wordpress-persistent-storage
+      containers:
+        - name: wordpress
+          image: wordpress
+          volumeMounts:
+          - name: wordpress-persistent-storage
+            mountPath: "/var/www/html"
+          env:
+          - name: WORDPRESS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-pass
+                key: password
