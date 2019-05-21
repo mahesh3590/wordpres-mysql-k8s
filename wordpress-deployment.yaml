@@ -14,8 +14,6 @@ spec:
       labels:
         component: wp-frontend
     spec:
-      ports:
-      - containerPort: 80
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
@@ -23,6 +21,8 @@ spec:
       containers:
         - name: wordpress
           image: wordpress
+          ports:
+          - containerPort: 80
           volumeMounts:
           - name: wordpress-persistent-storage
             mountPath: "/var/www/html"
